@@ -73,3 +73,4 @@ curl "https://number-api-ipe8.onrender.com/api/classify-number?number=371"
 
 ### Free Tier Constraints:
 - Fun facts depend on the [Number API](http://numbersapi.com); if it’s down, the fact will default to a placeholder.
+- A `/health` endpoint is provided for uptime monitoring. It returns `{"status": "ok"}`

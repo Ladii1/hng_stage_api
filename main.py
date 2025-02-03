@@ -95,7 +95,6 @@ async def http_exception_handler(request, exc):
         content={"number": "invalid", "error": True}
     )
 
-# Replace @app.get with @app.api_route
-@app.api_route("/health", methods=["GET", "HEAD"])  # ✅ CORRECT
+@app.api_route("/health", methods=["GET", "HEAD"])
 async def health_check():
     return {"status": "ok"}
