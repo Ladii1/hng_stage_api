@@ -60,7 +60,7 @@ def get_fun_fact(n: int) -> str:
         return f"Could not fetch fun fact for {n}."
 
 # API Endpoint
-@app.get("/api/classify-number", methods=["GET", "HEAD"])
+@app.get("/api/classify-number")
 async def classify_number(number: str = Query(...)):
     try:
         num = int(number)
@@ -94,3 +94,8 @@ async def http_exception_handler(request, exc):
         status_code=400,
         content={"number": "invalid", "error": True}
     )
+
+# Replace @app.get with @app.api_route
+@app.api_route("/health", methods=["GET", "HEAD"])  # ✅ CORRECT
+async def health_check():
+    return {"status": "ok"}
