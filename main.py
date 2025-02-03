@@ -16,6 +16,9 @@ app.add_middleware(
 
 # Check if a number is prime
 def is_prime(n: int) -> bool:
+    n = abs(n)  
+    if n <= 1:
+        return False 
     if n <= 1:
         return False
     if n == 2:
@@ -30,6 +33,9 @@ def is_prime(n: int) -> bool:
 
 # Check if a number is a perfect number
 def is_perfect(n: int) -> bool:
+    n = abs(n)  
+    if n <= 1:
+        return False
     if n <= 1:
         return False
     sum_divisors = 1
@@ -44,6 +50,7 @@ def is_perfect(n: int) -> bool:
 
 # Check if a number is an armstrong number
 def is_armstrong(n: int) -> bool:
+    n = abs(n) 
     if n < 0:
         return False
     digits = str(n)
@@ -63,17 +70,23 @@ def get_fun_fact(n: int) -> str:
 @app.get("/api/classify-number")
 async def classify_number(number: str = Query(...)):
     try:
-        num = int(number)
-        if num < 0:
-            raise HTTPException(status_code=400, detail="Negative numbers not allowed")
+        num = float(number)
+        if not num.is_integer():
+            raise ValueError
+        num = int(num)
     except ValueError:
         return JSONResponse(
             status_code=400,
             content={"number": number, "error": True}
         )
     
+    # Check on the negative numbers
+    is_prime_num = is_prime(abs(num)) 
+    is_perfect_num = is_perfect(abs(num))
+    is_armstrong_num = is_armstrong(abs(num))
+
     properties = ["even" if num % 2 == 0 else "odd"]
-    if is_armstrong(num):
+    if is_armstrong_num:
         properties.append("armstrong")
     
     #JSON Response
