@@ -60,7 +60,7 @@ def get_fun_fact(n: int) -> str:
         return f"Could not fetch fun fact for {n}."
 
 # API Endpoint
-@app.get("/api/classify-number")
+@app.get("/api/classify-number", methods=["GET", "HEAD"])
 async def classify_number(number: str = Query(...)):
     try:
         num = int(number)
